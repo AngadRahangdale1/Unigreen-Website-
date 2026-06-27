@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Send, ArrowRight } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
   const formRef = useRef(null);
@@ -28,18 +29,20 @@ export default function ContactSection() {
     setStatus({ loading: true, success: false, error: false });
 
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000" : "https://unigreen-backend.onrender.com");
-      const response = await fetch(`${apiBaseUrl}/api/contact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const templateParams = {
+        user_name: formData.name,
+        user_email: formData.email,
+        message: formData.message,
+      };
 
-      const data = await response.json();
+      const result = await emailjs.send(
+        "service_2c11aty",
+        "template_2rkdze9",
+        templateParams,
+        "onTxtGmFd8P0xyElT"
+      );
 
-      if (response.ok && data.success) {
+      if (result.status === 200) {
         setStatus({ loading: false, success: true, error: false });
         setFormData({ name: "", email: "", message: "" });
         if (formRef.current) {
