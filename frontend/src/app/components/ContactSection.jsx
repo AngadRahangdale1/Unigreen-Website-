@@ -14,6 +14,7 @@ export default function ContactSection() {
     loading: false,
     success: false,
     error: false,
+    errorMessage: "",
   });
 
   const handleChange = (e) => {
@@ -26,7 +27,7 @@ export default function ContactSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({ loading: true, success: false, error: false });
+    setStatus({ loading: true, success: false, error: false, errorMessage: "" });
 
     try {
       const templateParams = {
@@ -46,17 +47,22 @@ export default function ContactSection() {
       );
 
       if (result.status === 200) {
-        setStatus({ loading: false, success: true, error: false });
+        setStatus({ loading: false, success: true, error: false, errorMessage: "" });
         setFormData({ name: "", email: "", message: "" });
         if (formRef.current) {
           formRef.current.reset();
         }
       } else {
-        setStatus({ loading: false, success: false, error: true });
+        setStatus({ loading: false, success: false, error: true, errorMessage: "Failed to send email." });
       }
     } catch (err) {
       console.error("Submission error:", err);
-      setStatus({ loading: false, success: false, error: true });
+      setStatus({
+        loading: false,
+        success: false,
+        error: true,
+        errorMessage: err?.text || err?.message || "Something went wrong. Please try again.",
+      });
     }
   };
 
@@ -202,7 +208,7 @@ export default function ContactSection() {
               )}
               {status.error && (
                 <div className="text-sm font-semibold text-red-500">
-                  ❌ Something went wrong. Please try again.
+                  ❌ {status.errorMessage || "Something went wrong. Please try again."}
                 </div>
               )}
 
