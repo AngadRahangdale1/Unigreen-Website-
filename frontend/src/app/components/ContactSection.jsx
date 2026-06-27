@@ -30,7 +30,9 @@ export default function ContactSection() {
 
     try {
       const templateParams = {
+        name: formData.name,
         user_name: formData.name,
+        email: formData.email,
         user_email: formData.email,
         message: formData.message,
         to_email: "subhamsahoo@unigreenin.in",
