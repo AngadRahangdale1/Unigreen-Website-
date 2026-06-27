@@ -28,7 +28,7 @@ export default function ContactSection() {
     setStatus({ loading: true, success: false, error: false });
 
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const apiBaseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000" : "https://unigreen-backend.onrender.com");
       const response = await fetch(`${apiBaseUrl}/api/contact`, {
         method: "POST",
         headers: {

@@ -20,7 +20,7 @@ export default function CloudinaryGallery() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiBaseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : 'https://unigreen-backend.onrender.com');
 
   // Fetch images from backend
   const fetchImages = async () => {
