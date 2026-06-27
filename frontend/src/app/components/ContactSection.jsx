@@ -33,6 +33,7 @@ export default function ContactSection() {
         user_name: formData.name,
         user_email: formData.email,
         message: formData.message,
+        to_email: "subhamsahoo@unigreenin.in",
       };
 
       const result = await emailjs.send(
