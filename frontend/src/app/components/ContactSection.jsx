@@ -41,7 +41,7 @@ export default function ContactSection() {
 
       const result = await emailjs.send(
         "service_2c11aty",
-        "template_2rkdze9",
+        "lhd18v9",
         templateParams,
         "onTxtGmFd8P0xyElT"
       );
